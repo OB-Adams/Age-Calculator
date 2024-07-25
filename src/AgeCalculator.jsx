@@ -102,7 +102,7 @@ const AgeCalculator = () => {
                     onClick={handleAgeCalc}
                 >
                     <img
-                        src="src\assets\icon-arrow.svg"
+                        src="src\assets\arrow-down.svg"
                         alt="arrow"
                         className="w-6"
                     />
