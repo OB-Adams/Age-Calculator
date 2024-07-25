@@ -1,4 +1,5 @@
 import { useState } from "react";
+import arrowIcon from './assets/icon-arrow.svg'
 
 const AgeCalculator = () => {
     const [sDay, setSDay] = useState("");
@@ -102,7 +103,7 @@ const AgeCalculator = () => {
                     onClick={handleAgeCalc}
                 >
                     <img
-                        src="src\assets\arrow-down.svg"
+                        src={arrowIcon}
                         alt="arrow"
                         className="w-6"
                     />
