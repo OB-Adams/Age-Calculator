@@ -44,35 +44,32 @@ const AgeCalculator = () => {
   const handleAgeCalc = () => {
     if (!sDay || !sMonth || !sYear) {
       setError("All fields are required");
-        
-    //   if (!sDay) {
-    //     setErrors((prevErrors) => {
-    //         return {
-    //             ...prevErrors, 
-    //             emptyDay: true
-    //         }
-    //     })
-    //   } else if (!sMonth) {
-    //     setErrors((prevErrors) => {
-    //         return {
-    //             ...prevErrors, 
-    //             emptyMonth: true
-    //         }
-    //     })
-    //   } else if (!sYear) {
-    //     setErrors((prevErrors) => {
-    //         return {
-    //             ...prevErrors, 
-    //             emptyYear: true
-    //         }
-    //     })
-    //   }
 
-      setErrors({
-        ...errors,
-        emptyDay: true,
-        emptyMonth: true,
-        emptyYear: true,
+      //   if (!sDay) {
+      //     setErrors((prevErrors) => {
+      //         return {
+      //             ...prevErrors,
+      //             emptyDay: true
+      //         }
+      //     })
+      //   } else if (!sMonth) {
+      //     setErrors((prevErrors) => {
+      //         return {
+      //             ...prevErrors,
+      //             emptyMonth: true
+      //         }
+      //     })
+      //   } else if (!sYear) {
+      //     setErrors((prevErrors) => {
+      //         return {
+      //             ...prevErrors,
+      //             emptyYear: true
+      //         }
+      //     })
+      //   }
+
+      setErrors((prev) => {
+        return { ...prev, emptyDay: true, emptyMonth: true, emptyYear: true };
       });
       return;
     }
@@ -83,33 +80,35 @@ const AgeCalculator = () => {
 
     if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1900) {
       setError("Invalid date");
-    //   if (day < 1 || day > 31) {
-    //     setErrors((prevErrors) => {
-    //         return {
-    //             ...prevErrors,
-    //             invalidDay: true
-    //         }
-    //     })
-    //   } else if (month < 1 || month > 12) {
-    //     setErrors((prevErrors) => {
-    //         return {
-    //             ...prevErrors,
-    //             invalidMonth: true
-    //         }
-    //     })
-    //   } else if (year < 1900) {
-    //     setErrors((prevErrors) => {
-    //         return {
-    //             ...prevErrors,
-    //             invalidYear: true
-    //         }
-    //     })
-    //   }
-      setErrors({
-        ...errors,
-        invalidDay: true,
-        invalidMonth: true,
-        invalidYear: true,
+      //   if (day < 1 || day > 31) {
+      //     setErrors((prevErrors) => {
+      //         return {
+      //             ...prevErrors,
+      //             invalidDay: true
+      //         }
+      //     })
+      //   } else if (month < 1 || month > 12) {
+      //     setErrors((prevErrors) => {
+      //         return {
+      //             ...prevErrors,
+      //             invalidMonth: true
+      //         }
+      //     })
+      //   } else if (year < 1900) {
+      //     setErrors((prevErrors) => {
+      //         return {
+      //             ...prevErrors,
+      //             invalidYear: true
+      //         }
+      //     })
+      //   }
+      setErrors((prev) => {
+        return {
+          ...prev,
+          invalidDay: true,
+          invalidMonth: true,
+          invalidYear: true,
+        };
       });
       return;
     }
@@ -157,7 +156,7 @@ const AgeCalculator = () => {
             placeholder="DD"
             className={classNames("w-[6rem]", "p-2", "placeholder-slate-500", {
               "focus:border-red-400 focus:ring-red-400 border-[1px] border-red-400":
-                errors.emptyDay,
+                error,
               "": !error,
             })}
           />
