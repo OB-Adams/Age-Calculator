@@ -6,7 +6,6 @@ const AgeCalculator = () => {
   const [sDay, setSDay] = useState("");
   const [sMonth, setSMonth] = useState("");
   const [sYear, setSYear] = useState("");
-  const [error, setError] = useState("");
   const [errors, setErrors] = useState({
     emptyDay: false,
     emptyMonth: false,
@@ -19,7 +18,6 @@ const AgeCalculator = () => {
 
   const handleInputChange = (setter) => (e) => {
     setter(e.target.value);
-    setError("");
     setErrors({
       emptyDay: false,
       emptyMonth: false,
@@ -52,7 +50,6 @@ const AgeCalculator = () => {
     };
 
     if (newErrors.emptyDay || newErrors.emptyMonth || newErrors.emptyYear) {
-      setError("All fields are required");
       setErrors(newErrors);
       return;
     }
@@ -66,15 +63,12 @@ const AgeCalculator = () => {
     newErrors.invalidYear = year < 1900;
 
     if (newErrors.invalidDay || newErrors.invalidMonth || newErrors.invalidYear) {
-      setError("Invalid date");
       setErrors(newErrors);
       return;
     }
 
     const birthDate = new Date(year, month - 1, day);
-    if (isNaN(birthDate.getTime()) || birthDate > new Date()) {
-      setError("Date must be in the past");
-      setErrors(newErrors);
+    if (isNaN(birthDate.getTime()) || birthDate > new Date()) {      setErrors(newErrors);
       return;
     }
 
@@ -180,7 +174,7 @@ const AgeCalculator = () => {
       </div>
       <div id="arrow" className="flex justify-end">
         <div
-          className="bg-purple rounded-full w-max p-3 hover:cursor-pointer active:scale-90 active:bg-black"
+          className="bg-purple rounded-full w-max p-3 hover:cursor-pointer active:scale-90 active:bg-black transition-all"
           onClick={handleAgeCalc}
         >
           <img src={arrowIcon} alt="arrow" className="w-6" />
