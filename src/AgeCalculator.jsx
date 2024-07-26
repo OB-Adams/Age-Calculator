@@ -42,35 +42,18 @@ const AgeCalculator = () => {
   };
 
   const handleAgeCalc = () => {
-    if (!sDay || !sMonth || !sYear) {
+    let newErrors = {
+      emptyDay: !sDay,
+      emptyMonth: !sMonth,
+      emptyYear: !sYear,
+      invalidDay: false,
+      invalidMonth: false,
+      invalidYear: false,
+    };
+
+    if (newErrors.emptyDay || newErrors.emptyMonth || newErrors.emptyYear) {
       setError("All fields are required");
-
-      //   if (!sDay) {
-      //     setErrors((prevErrors) => {
-      //         return {
-      //             ...prevErrors,
-      //             emptyDay: true
-      //         }
-      //     })
-      //   } else if (!sMonth) {
-      //     setErrors((prevErrors) => {
-      //         return {
-      //             ...prevErrors,
-      //             emptyMonth: true
-      //         }
-      //     })
-      //   } else if (!sYear) {
-      //     setErrors((prevErrors) => {
-      //         return {
-      //             ...prevErrors,
-      //             emptyYear: true
-      //         }
-      //     })
-      //   }
-
-      setErrors((prev) => {
-        return { ...prev, emptyDay: true, emptyMonth: true, emptyYear: true };
-      });
+      setErrors(newErrors);
       return;
     }
 
@@ -78,49 +61,20 @@ const AgeCalculator = () => {
     const month = parseInt(sMonth, 10);
     const year = parseInt(sYear, 10);
 
-    if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1900) {
+    newErrors.invalidDay = day < 1 || day > 31;
+    newErrors.invalidMonth = month < 1 || month > 12;
+    newErrors.invalidYear = year < 1900;
+
+    if (newErrors.invalidDay || newErrors.invalidMonth || newErrors.invalidYear) {
       setError("Invalid date");
-      //   if (day < 1 || day > 31) {
-      //     setErrors((prevErrors) => {
-      //         return {
-      //             ...prevErrors,
-      //             invalidDay: true
-      //         }
-      //     })
-      //   } else if (month < 1 || month > 12) {
-      //     setErrors((prevErrors) => {
-      //         return {
-      //             ...prevErrors,
-      //             invalidMonth: true
-      //         }
-      //     })
-      //   } else if (year < 1900) {
-      //     setErrors((prevErrors) => {
-      //         return {
-      //             ...prevErrors,
-      //             invalidYear: true
-      //         }
-      //     })
-      //   }
-      setErrors((prev) => {
-        return {
-          ...prev,
-          invalidDay: true,
-          invalidMonth: true,
-          invalidYear: true,
-        };
-      });
+      setErrors(newErrors);
       return;
     }
 
     const birthDate = new Date(year, month - 1, day);
-    if (isNaN(birthDate.getTime())) {
-      setError("Invalid date");
-      return;
-    }
-
-    if (birthDate > new Date()) {
+    if (isNaN(birthDate.getTime()) || birthDate > new Date()) {
       setError("Date must be in the past");
+      setErrors(newErrors);
       return;
     }
 
@@ -141,8 +95,8 @@ const AgeCalculator = () => {
               "tracking-[0.1rem]",
               "font-normal",
               {
-                "text-lightGrey": !error,
-                "text-red-400": error,
+                "text-lightGrey": !errors.emptyDay && !errors.invalidDay,
+                "text-red-400": errors.emptyDay || errors.invalidDay,
               }
             )}
           >
@@ -156,20 +110,12 @@ const AgeCalculator = () => {
             placeholder="DD"
             className={classNames("w-[6rem]", "p-2", "placeholder-slate-500", {
               "focus:border-red-400 focus:ring-red-400 border-[1px] border-red-400":
-                error,
-              "": !error,
+                errors.emptyDay || errors.invalidDay,
             })}
           />
-          {errors.invalidDay && (
-            <p className="text-[0.6rem] text-red-400 italic">
-              Must be a valid day
-            </p>
-          )}
-          {errors.emptyDay && (
-            <p className="text-[0.6rem] text-red-400 italic">
-              This field is required
-            </p>
-          )}
+          <p className="text-[0.6rem] text-red-400 italic error-displayD">
+            {errors.emptyDay ? "This field is required" : errors.invalidDay ? "Enter a valid day" : ""}
+          </p>
         </div>
         <div id="month" className="flex flex-col gap-1">
           <label
@@ -179,8 +125,8 @@ const AgeCalculator = () => {
               "tracking-[0.1rem]",
               "font-normal",
               {
-                "text-lightGrey": !error,
-                "text-red-400": error,
+                "text-lightGrey": !errors.emptyMonth && !errors.invalidMonth,
+                "text-red-400": errors.emptyMonth || errors.invalidMonth,
               }
             )}
           >
@@ -194,20 +140,12 @@ const AgeCalculator = () => {
             placeholder="MM"
             className={classNames("w-[6rem]", "p-2", "placeholder-slate-500", {
               "focus:border-red-400 focus:ring-red-400 border-[1px] border-red-400":
-                error,
-              "": !error,
+                errors.emptyMonth || errors.invalidMonth,
             })}
           />
-          {errors.invalidMonth && (
-            <p className="text-[0.6rem] text-red-400 italic">
-              Must be a valid month
-            </p>
-          )}
-          {errors.emptyMonth && (
-            <p className="text-[0.6rem] text-red-400 italic">
-              This field is required
-            </p>
-          )}
+          <p className="text-[0.6rem] text-red-400 italic error-displayM">
+            {errors.emptyMonth ? "This field is required" : errors.invalidMonth ? "Enter a valid month" : ""}
+          </p>
         </div>
         <div id="year" className="flex flex-col gap-1">
           <label
@@ -217,8 +155,8 @@ const AgeCalculator = () => {
               "tracking-[0.1rem]",
               "font-normal",
               {
-                "text-lightGrey": !error,
-                "text-red-400": error,
+                "text-lightGrey": !errors.emptyYear && !errors.invalidYear,
+                "text-red-400": errors.emptyYear || errors.invalidYear,
               }
             )}
           >
@@ -232,20 +170,12 @@ const AgeCalculator = () => {
             placeholder="YYYY"
             className={classNames("w-[6rem]", "p-2", "placeholder-slate-500", {
               "focus:border-red-400 focus:ring-red-400 border-[1px] border-red-400":
-                error,
-              "": !error,
+                errors.emptyYear || errors.invalidYear,
             })}
           />
-          {errors.invalidYear && (
-            <p className="text-[0.6rem] text-red-400 italic">
-              Must be a valid year
-            </p>
-          )}
-          {errors.emptyYear && (
-            <p className="text-[0.6rem] text-red-400 italic">
-              This field is required
-            </p>
-          )}
+          <p className="text-[0.6rem] text-red-400 italic error-displayY">
+            {errors.emptyYear ? "This field is required" : errors.invalidYear ? "Enter a valid year" : ""}
+          </p>
         </div>
       </div>
       <div id="arrow" className="flex justify-end">
