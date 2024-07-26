@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import arrowIcon from "./assets/icon-arrow.svg";
 import classNames from "classnames";
 
@@ -55,18 +55,39 @@ const AgeCalculator = () => {
       isFuture: false,
     };
 
-    if (newErrors.emptyDay || newErrors.emptyMonth || newErrors.emptyYear) {
-      setErrors(newErrors);
-      return;
-    }
-
     const day = parseInt(sDay, 10);
     const month = parseInt(sMonth, 10);
     const year = parseInt(sYear, 10);
 
+    if (newErrors.emptyDay || newErrors.emptyMonth || newErrors.emptyYear) {
+        setErrors(newErrors);
+        if (!newErrors.emptyDay && (day < 1 || day > 31)) {
+            setErrors((prev) => {
+                return {...prev, invalidDay: true}
+            })
+        }
+        if (!newErrors.emptyMonth && (month < 1 || month > 12)) {
+            setErrors((prev) => {
+                return {...prev, invalidMonth: true}
+            })
+        }
+        if (!newErrors.emptyYear && (year < 100)) {
+            setErrors((prev) => {
+                return {...prev, invalidYear: true}
+            })
+        }
+        if (!newErrors.emptyYear && (year > new Date().getUTCFullYear())) {
+            setErrors((prev) => {
+                return {...prev, isFuture: true}
+            })
+        }
+      return;
+    }
+
+
     newErrors.invalidDay = day < 1 || day > 31;
     newErrors.invalidMonth = month < 1 || month > 12;
-    newErrors.invalidYear = year < 1000;
+    newErrors.invalidYear = year < 100;
     newErrors.isFuture = year > new Date().getUTCFullYear();
 
     if (
@@ -108,6 +129,21 @@ const AgeCalculator = () => {
 
     setAge(calculateAge(birthDate));
   };
+
+  useEffect(() => {
+    const handleEnterPress = (e) => {
+      if (e.key === 'Enter') {
+        handleAgeCalc();
+      }
+    };
+
+    window.addEventListener('keydown', handleEnterPress);
+
+    return () => {
+      window.removeEventListener('keydown', handleEnterPress);
+    };
+  })
+
 
   return (
     <div
