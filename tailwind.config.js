@@ -12,7 +12,8 @@ export default {
         smokeyGrey: 'var(--smokey-grey)',
         offBlack: 'var(--off-black)',
         purple: 'var(--purple)',
-        lightRed: 'var(--light-Red)'
+        lightRed: 'var(--light-Red)',
+        lightPurple: 'var(--light-purple)'
       },
       fontFamily: {
         'Poppins': ['Poppins', 'sans-serif']

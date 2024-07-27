@@ -60,30 +60,29 @@ const AgeCalculator = () => {
     const year = parseInt(sYear, 10);
 
     if (newErrors.emptyDay || newErrors.emptyMonth || newErrors.emptyYear) {
-        setErrors(newErrors);
-        if (!newErrors.emptyDay && (day < 1 || day > 31)) {
-            setErrors((prev) => {
-                return {...prev, invalidDay: true}
-            })
-        }
-        if (!newErrors.emptyMonth && (month < 1 || month > 12)) {
-            setErrors((prev) => {
-                return {...prev, invalidMonth: true}
-            })
-        }
-        if (!newErrors.emptyYear && (year < 100)) {
-            setErrors((prev) => {
-                return {...prev, invalidYear: true}
-            })
-        }
-        if (!newErrors.emptyYear && (year > new Date().getUTCFullYear())) {
-            setErrors((prev) => {
-                return {...prev, isFuture: true}
-            })
-        }
+      setErrors(newErrors);
+      if (!newErrors.emptyDay && (day < 1 || day > 31)) {
+        setErrors((prev) => {
+          return { ...prev, invalidDay: true };
+        });
+      }
+      if (!newErrors.emptyMonth && (month < 1 || month > 12)) {
+        setErrors((prev) => {
+          return { ...prev, invalidMonth: true };
+        });
+      }
+      if (!newErrors.emptyYear && year < 100) {
+        setErrors((prev) => {
+          return { ...prev, invalidYear: true };
+        });
+      }
+      if (!newErrors.emptyYear && year > new Date().getUTCFullYear()) {
+        setErrors((prev) => {
+          return { ...prev, isFuture: true };
+        });
+      }
       return;
     }
-
 
     newErrors.invalidDay = day < 1 || day > 31;
     newErrors.invalidMonth = month < 1 || month > 12;
@@ -132,25 +131,24 @@ const AgeCalculator = () => {
 
   useEffect(() => {
     const handleEnterPress = (e) => {
-      if (e.key === 'Enter') {
+      if (e.key === "Enter") {
         handleAgeCalc();
       }
     };
 
-    window.addEventListener('keydown', handleEnterPress);
+    window.addEventListener("keydown", handleEnterPress);
 
     return () => {
-      window.removeEventListener('keydown', handleEnterPress);
+      window.removeEventListener("keydown", handleEnterPress);
     };
-  })
-
+  });
 
   return (
     <div
       id="container"
-      className="flex flex-col gap-2 font-Poppins w-[30rem] p-8 bg-white rounded-br-[6rem]"
+      className="flex flex-col gap-2 font-Poppins sm:w-[30rem] w-full max-w-[30rem] p-4 sm:p-8 bg-white rounded-br-[3rem] sm:rounded-br-[6rem]"
     >
-      <div id="date-input" className="flex gap-4">
+      <div id="date-input" className="flex flex-col sm:flex-row gap-3">
         <div id="day" className="flex flex-col gap-1">
           <label
             htmlFor="day"
@@ -173,10 +171,15 @@ const AgeCalculator = () => {
             value={sDay}
             onChange={handleInputChange(setSDay)}
             placeholder="DD"
-            className={classNames("w-[6rem]", "p-2", "placeholder-slate-500", {
-              "focus:border-red-400 focus:ring-red-400 border-[1px] border-red-400":
-                errors.emptyDay || errors.invalidDay || errors.invalidDate,
-            })}
+            className={classNames(
+              "w-full sm:w-[6rem]",
+              "p-2",
+              "placeholder-slate-500",
+              {
+                "focus:border-red-400 focus:ring-red-400 border-[1px] border-red-400":
+                  errors.emptyDay || errors.invalidDay || errors.invalidDate,
+              }
+            )}
           />
           <p className="text-[0.6rem] text-red-400 italic error-displayD">
             {errors.emptyDay
@@ -215,10 +218,17 @@ const AgeCalculator = () => {
             value={sMonth}
             onChange={handleInputChange(setSMonth)}
             placeholder="MM"
-            className={classNames("w-[6rem]", "p-2", "placeholder-slate-500", {
-              "focus:border-red-400 focus:ring-red-400 border-[1px] border-red-400":
-                errors.emptyMonth || errors.invalidMonth || errors.invalidDate,
-            })}
+            className={classNames(
+              "w-full sm:w-[6rem]",
+              "p-2",
+              "placeholder-slate-500",
+              {
+                "focus:border-red-400 focus:ring-red-400 border-[1px] border-red-400":
+                  errors.emptyMonth ||
+                  errors.invalidMonth ||
+                  errors.invalidDate,
+              }
+            )}
           />
           <p className="text-[0.6rem] text-red-400 italic error-displayM">
             {errors.emptyMonth
@@ -257,13 +267,18 @@ const AgeCalculator = () => {
             value={sYear}
             onChange={handleInputChange(setSYear)}
             placeholder="YYYY"
-            className={classNames("w-[6rem]", "p-2", "placeholder-slate-500", {
-              "focus:border-red-400 focus:ring-red-400 border-[1px] border-red-400":
-                errors.emptyYear ||
-                errors.invalidYear ||
-                errors.invalidDate ||
-                errors.isFuture,
-            })}
+            className={classNames(
+              "w-full sm:w-[6rem]",
+              "p-2",
+              "placeholder-slate-500",
+              {
+                "focus:border-red-400 focus:ring-red-400 border-[1px] border-red-400":
+                  errors.emptyYear ||
+                  errors.invalidYear ||
+                  errors.invalidDate ||
+                  errors.isFuture,
+              }
+            )}
           />
           <p className="text-[0.6rem] text-red-400 italic error-displayY">
             {errors.emptyYear
@@ -276,9 +291,12 @@ const AgeCalculator = () => {
           </p>
         </div>
       </div>
-      <div id="arrow" className="flex justify-end">
+      <div
+        id="arrow"
+        className="flex justify-center sm:justify-end mt-4 sm:mt-0"
+      >
         <div
-          className="bg-purple rounded-full w-max p-3 hover:cursor-pointer active:scale-90 active:bg-black transition-all"
+          className="bg-purple hover:bg-lightPurple rounded-full w-max p-3 hover:cursor-pointer active:scale-90 active:bg-black transition-all"
           onClick={handleAgeCalc}
         >
           <img src={arrowIcon} alt="arrow" className="w-6" />
@@ -286,17 +304,17 @@ const AgeCalculator = () => {
       </div>
       <div
         id="date-display"
-        className="flex flex-col gap-0 h-[10rem] text-[3rem] font-extrabold italic"
+        className="flex flex-col gap-0 h-auto sm:h-[10rem] text-[2rem] sm:text-[3rem] font-extrabold italic mt-3 sm:mt-0"
       >
-        <p className="mt-[-1rem]">
+        <p className="sm:mt-[-1rem]">
           <i className="text-purple">{age.years}</i>{" "}
           {age.years > 1 || age.years === "--" ? "years" : "year"}
         </p>
-        <p className="mt-[-1rem]">
+        <p className="sm:mt-[-1rem]">
           <i className="text-purple">{age.months}</i>{" "}
           {age.months > 1 || age.months === "--" ? "months" : "month"}
         </p>
-        <p className="mt-[-1rem]">
+        <p className="sm:mt-[-1rem]">
           <i className="text-purple">{age.days}</i>{" "}
           {age.days > 1 || age.days === "--" ? "days" : "day"}
         </p>

@@ -5,7 +5,7 @@
   --off-black: hsl(0, 0%, 8%);
   --purple: hsl(259, 100%, 65%);
   --light-red: hsl(0, 100%, 67%);
-  
+  --light-purple: hsla(259, 100%, 65%, 0.9);
 }
 
 @tailwind base;

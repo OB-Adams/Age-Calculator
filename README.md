@@ -7,7 +7,7 @@ This is a simple age calculator app built using React. The app allows users to i
 - Input fields for day, month, and year of birth
 - Calculates age in years, months, and days
 - Extensive error handling for input fields
-- Responsive design
+- Responsive design and mobile phone screen layout
 
 ## Live Demo
 
