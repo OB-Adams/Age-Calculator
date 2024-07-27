@@ -55,12 +55,15 @@ const AgeCalculator = () => {
       isFuture: false,
     };
 
+    const ageReset = { years: "--", months: "--", days: "--" };
+
     const day = parseInt(sDay, 10);
     const month = parseInt(sMonth, 10);
     const year = parseInt(sYear, 10);
 
     if (newErrors.emptyDay || newErrors.emptyMonth || newErrors.emptyYear) {
       setErrors(newErrors);
+      setAge(ageReset);
       if (!newErrors.emptyDay && (day < 1 || day > 31)) {
         setErrors((prev) => {
           return { ...prev, invalidDay: true };
@@ -95,6 +98,7 @@ const AgeCalculator = () => {
       newErrors.invalidYear ||
       newErrors.isFuture
     ) {
+      setAge(ageReset);
       if (newErrors.invalidDay) {
         setErrors((prev) => {
           return { ...prev, invalidDay: true };
@@ -120,6 +124,7 @@ const AgeCalculator = () => {
 
     const birthDate = new Date(year, month - 1, day);
     if (isNaN(birthDate.getTime()) || birthDate > new Date()) {
+        setAge(ageReset)
       setErrors((prev) => {
         return { ...prev, invalidDate: true };
       });
