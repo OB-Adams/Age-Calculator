@@ -24,14 +24,21 @@ Make sure you have Node.js and npm installed on your machine. You can download t
 ### Installation
 
 1. Clone the repository:
-    git clone https://github.com/OB-Adams/Age-Calculator.git
+```
+git clone https://github.com/OB-Adams/Age-Calculator.git
+```
 2. Navigate to the project directory:
-    cd your-repo-name
+```
+cd your-repo-name
+```
 3. Install the dependencies:
-    npm install
+```
+npm install
+```
 4. Start the development server:
-    npm run dev
-    
+```
+npm run dev
+```
 The app should now be running on [http://localhost:3000](http://localhost:3000).
 
 ## Deployment
@@ -39,9 +46,13 @@ The app should now be running on [http://localhost:3000](http://localhost:3000).
 This app is deployed on GitHub Pages. To deploy your own version, follow these steps:
 
 1. Build the project:
-    npm run build
+```
+npm run build
+```
 2. Deploy to GitHub Pages:
-    npm run deploy
+```
+npm run deploy
+```
     
 ## Usage
 
